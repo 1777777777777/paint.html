@@ -11,6 +11,7 @@ Sivu on testattu Edgellä ja Firefox Developer Editionilla. Koska flood fill on 
 Aion tietenkin lisätä myös kaikki muut tehtävänannon vaatimat ominaisuudet. 
 
 Alla oleva GIF havainnollistaa filttereiden toimintaa yhden iteraation aikana.[^2]
+
 <img src="svgfx3.gif" width="400">
 
 [^1]: Filtterin tyypiksi piti `table`:n sijaan laittaa `discrete`...
