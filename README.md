@@ -4,9 +4,9 @@
 
 Vaikka sainkin SVG-filtterit lopulta tukemaan eri värejä[^1], pitäydyn ehkä mustavalkoisessa tyylissä esteettisistä syistä. Samalla vähenee myös bugien määrä, joihin käyttäjä muuten väistämättä törmäisi. Ongelmat johtuvat pitkälti siitä, miten SVG-filtterit toimivat.
 
-Tällä hetkellä piirroksia ei pysty tallentamaan. Sen voisi kuitenkin toteuttaa lähettämällä jokaisesta pikselistä erillisen `background-image`-kutsun palvelimelle. Maalipurkki voisi toimia samalla tavalla. Palvelin ajaisi BFS-simulaation ja tallentaisi tulokset SQLite-tietokantaan
+Tällä hetkellä piirroksia ei pysty tallentamaan. Sen voisi kuitenkin toteuttaa lähettämällä jokaisesta pikselistä erillisen `background-image`-kutsun palvelimelle. Maalipurkki voisi toimia samalla tavalla. Palvelin ajaisi BFS-simulaation ja tallentaisi tulokset SQLite-tietokantaan.
 
-Sivu on testattu Edgellä ja Firefox Developer Editionilla. Koska flood fill on simuloitu SVG-filttereiden avulla ilman rekursiota, iterointi on koodattu suoraan HTML-tiedostoon. DOM-elementtien määrä voi siis olla hyvinkin suuri, ja sivun toimivuus on kiinni käyttäjän koneen tehoista. Jos maalipurkki ei toimi, iteraatioiden määrää kannattaa pienentää muokkaamalla HTML-tiedostoa. Iteraatioiden vähentäminen tosin vaikuttaa siihen, kuinka pitkälle täyttö leviää. Esimerkiksi omalla koneella U-kirjaimen muotoisen alueen täyttäminen vaatii vähintään 55 iteraatiota.
+Sivu on testattu Edgellä ja Firefox Developer Editionilla. Koska flood fill on simuloitu SVG-filttereiden avulla siis ilman rekursiota, iterointi on koodattu suoraan HTML-tiedostoon. DOM-elementtien määrä voi siis olla hyvinkin suuri, ja sivun toimivuus on kiinni käyttäjän koneen tehoista. Jos maalipurkki ei toimi, iteraatioiden määrää kannattaa pienentää muokkaamalla HTML-tiedostoa. Iteraatioiden vähentäminen tosin vaikuttaa siihen, kuinka pitkälle täyttö leviää. Esimerkiksi omalla koneella U-kirjaimen muotoisen alueen täyttäminen vaatii vähintään 55 iteraatiota.
 
 Aion tietenkin lisätä myös kaikki muut tehtävänannon vaatimat ominaisuudet. 
 
