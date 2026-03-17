@@ -1,6 +1,6 @@
 # paint.html
 
-Sivu on toteutettu täysin ilman JavaScriptiä. Sivulta löytyy hiirtä vetämällä toimiva kynätyökalu sekä maalipurkki, joka simuloi alueen flood fillin SVG-filttereiden avulla.
+Sivu on toteutettu täysin ilman JavaScriptiä. Sivulta löytyy kynätyökalu sekä maalipurkki, joka simuloi alueen flood fillin SVG-filttereiden avulla.
 
 Vaikka sainkin SVG-filtterit lopulta toimimaan millä tahansa värillä[^1], aion kuitenkin rajoittaa värit mustavalkoiseen esteettisten käsitysten vuoksi. Samalla myös bugien määrä, joihin käyttäjä muuten väistämättä törmäisi. Ongelma on pitkälti ihan vain siinä, miten SVG-filtterit toimivat.
 
