@@ -12,7 +12,7 @@ Aion tietenkin lisätä myös kaikki muut tehtävänannon vaatimat ominaisuudet.
 
 Alla oleva GIF havainnollistaa filttereiden toimintaa yhden iteraation aikana.[^2]
 
-<img src="svgfx3.gif" width="800">
+![SVGFX](svgfx3.gif)
 
 [^1]: Filtterin tyypiksi piti `table`:n sijaan laittaa `discrete`...
 [^2]: Käytin filttereiden suunnitteluun [SVGFM](https://svgfm.chriskirknielsen.com/)-työkalua. Generoima koodi oli kuitenkin virheellinen ja vaati korjaamista. 
