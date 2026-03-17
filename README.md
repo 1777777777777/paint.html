@@ -10,6 +10,8 @@ Sivu on testattu Edgellä ja Firefox Developer Editionilla. Koska flood fill on 
 
 Aion tietenkin lisätä myös kaikki muut tehtävänannon vaatimat ominaisuudet. 
 
-![SVG-fillteri esimerkki](svgfx3.gif)
+Alla oleva GIF havainnollistaa filttereiden toimintaa yhden iteraation aikana.[^2]
+<img src="svgfx3.gif" width="400">
 
 [^1]: Filtterin tyypiksi piti `table`:n sijaan laittaa `discrete`...
+[^2}: Käytin filttereiden suunnitteluun [SVGFM](https://svgfm.chriskirknielsen.com/)-sivustoa. Sivun generoima koodi oli kuitenkin virheellinen ja vaati korjaamista. 
