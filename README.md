@@ -10,7 +10,7 @@ Sivu on testattu Edgellä ja Firefox Developer Editionilla. Koska flood fill on 
 
 Aion tietenkin lisätä myös kaikki muut tehtävänannon vaatimat ominaisuudet. 
 
-Alla oleva GIF havainnollistaa filttereiden toimintaa yhden iteraation aikana.[^2]
+Alla oleva GIF havainnollistaa filttereiden toimintaa.[^2]
 
 ![SVGFX](svgfx3.gif)
 
