@@ -10,4 +10,6 @@ Sivu on testattu Edgellä ja Firefox Developer Editionilla. Koska flood fill on 
 
 Aion tietenkin lisätä myös kaikki muut tehtävänannon vaatimat ominaisuudet. 
 
+![SVG-fillteri esimerkki](svgfx3.gif)
+
 [^1]: Filtterin tyypiksi piti `table`:n sijaan laittaa `discrete`...
