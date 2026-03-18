@@ -1,3 +1,5 @@
+# paint.html
+
 [paint.html](https://1777777777777.github.io/paint.html/) on toteutettu täysin ilman JavaScriptiä. Sivulta löytyy kynätyökalu sekä maalipurkki, joka simuloi alueen flood fillin SVG-filttereiden avulla.
 
 Vaikka sainkin SVG-filtterit lopulta tukemaan eri värejä[^1], pitäydyn ehkä mustavalkoisessa tyylissä esteettisistä syistä. Samalla vähenee myös bugien määrä, joihin käyttäjä muuten väistämättä törmäisi. Ongelmat johtuvat pitkälti siitä, miten SVG-filtterit toimivat.
