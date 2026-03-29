@@ -1,0 +1,275 @@
+#panel-draw {
+    display: flex;
+    flex-direction: row;
+    overflow-y: disabled;
+}
+
+.board-container {
+    width: 353px;
+    padding: 16px;
+    border-right: 1px solid black;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+}
+
+#draw-title {
+    font-size: 12px;
+    border: none; 
+    border-bottom: 1px solid black;
+    padding-bottom: 8px; 
+    outline: none;
+    width: 100%;    
+    color: black;
+    margin-top: 10px;
+}
+
+#board { 
+    border: 1px solid black;
+    display: inline-grid;
+    line-height: 0;
+    gap: 0; 
+    background: transparent;
+    width: 320px; 
+    height: 320px; 
+}
+
+#board{
+    filter: url(#floodfill);
+}
+
+.p {
+    width: 32px; 
+    height: 32px; 
+    background: transparent;
+    transition: background-color 0s 9999s;
+}
+
+body:has(#pencil:checked) #board:active .p:hover {
+    background-color: black; transition: 0s;
+}
+
+body:has(#bucket:checked) #board:active .p:hover {
+    background-color: rgba(0, 0, 0, 0.5); transition: 0s;
+}
+
+#sidebar {
+    width: 159px;
+    padding: 16px; 
+    display: flex; 
+    flex-direction: column;
+}
+
+.tool-label {
+    font-size: 10px;
+    color: lightgrey;
+    margin-bottom: 8px;
+}
+
+
+input[type="radio"] { 
+    display: none; 
+}
+
+.tool-select { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 4px; 
+    margin-bottom: 48px; 
+}
+
+.tool-btn { 
+    border: 1px solid black; 
+    color: black; 
+    padding: 8px 12px; 
+    cursor: pointer; 
+    text-align: left; 
+    letter-spacing: 0.1em; 
+    transition: 0.1s; 
+    display: block;
+}
+
+
+body:has(#pencil:checked) label[for="pencil"],
+body:has(#bucket:checked) label[for="bucket"] { 
+    border-color: black; 
+    background: black; 
+    color: white; 
+}
+
+#publish-container { 
+    margin-top: auto; 
+    display: flex; 
+    flex-direction: column; 
+    /* gap: 16px; */ 
+    /* padding-top: 24px; */ 
+}
+
+.data-block {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    border: 1px solid black; 
+    cursor: grab; 
+    user-select: all; 
+    background: white; 
+    transition: background 0.1s;
+    margin: 3px auto;
+    scale: 75%;
+    width: 80px; 
+    height: 80px; 
+}
+
+.byte { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 8px;
+    line-height: 8px;
+}
+
+.data-block::selection, .data-block *::selection { 
+    background: black; 
+    color: white; 
+}
+
+.data-block:active { 
+    cursor: grabbing; 
+    background: black; 
+    color: white; 
+}
+
+.v { 
+    display: inline-block; 
+    overflow: hidden; 
+    vertical-align: bottom; 
+    transition: max-width 0s 9999s, visibility 0s 9999s; 
+}
+
+.v0 {
+    max-width: 1em; visibility: visible
+}
+.v1 {
+    max-width: 0px; visibility: hidden
+}
+.vb {
+    max-width: 0px; visibility: hidden
+}
+
+
+.barcode-container { 
+    position: relative; 
+    height: 48px; 
+    border: 1px solid #000; 
+    background: #fff; 
+    overflow: hidden; 
+    margin: 0; 
+}
+
+.barcode-container2 { 
+    position: absolute; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%;
+    background: white; 
+    filter: blur(4.1px) contrast(8); 
+}
+
+
+.barcode-gen {
+    position: absolute;
+    top: 0;
+    /*left: -5%; */
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    white-space: nowrap;
+    transform-origin: center;
+    color: #000;
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.barcode-gen {
+    transform: scaleX(2) scaleY(25);
+}
+
+textarea.barcode-gen { 
+    border: none; 
+    background: transparent; 
+    outline: none; 
+    resize: none; 
+    line-height: 48px; 
+    padding: 0; 
+    caret-color: transparent;
+}
+
+textarea::placeholder { color: transparent; }
+
+.barcode-overlay {
+    pointer-events: none;
+    line-height: 48px;
+    color: black;
+}
+
+.barcode-overlay::after { content: " "; }
+
+body:has(.data-block:active) .barcode-overlay {
+    color: #000;
+}
+
+body:has(.data-block:active) .barcode-overlay::after {
+    animation: calcBarcode 0.5s infinite steps(1);
+}
+
+.barcode-container:has(textarea:not(:placeholder-shown)) {
+    pointer-events: none;
+}
+
+@keyframes calcBarcode {
+    0% { content: "1b01b01b0"; }
+    10% { content: "b10101011";}
+    25% { content: "b1100011b";}
+    50% { content: "101b0b101";}
+    65% { content: "1b1111111";}
+    75% { content: "0b11b01b1";}
+}
+
+textarea:not(:placeholder-shown) + .barcode-overlay { display: none; }
+
+#hinthint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: lightgray;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+    gap: 4px;
+}
+
+.btn-submit {
+    width: 100%;
+    border: 1px solid lightgrey;
+    background: white;
+    color: lightgrey;
+    padding: 10px 0;
+    margin-top: 16px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    font-family: monospace;
+}
+
+#publish-form:has(textarea:not(:placeholder-shown)) .btn-submit {
+    background: black;
+    color: white;
+    border: 1px solid black;
+    pointer-events: auto;
+}

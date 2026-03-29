@@ -1,0 +1,48 @@
+.login-main {
+    padding: 121px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 250px;
+}
+
+.field {
+    padding: 10px; 
+    font-family: monospace;
+    border: 1px solid black;
+    border-radius: 0;
+    appearance: none;
+    outline: none;
+}
+
+.field::placeholder {
+    color: black;
+    opacity: 1;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 10px 0;
+    font-family: monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    
+    color: lightgrey;
+    border: 1px solid lightgrey;
+    background: white;
+    pointer-events: none; 
+    transition: all 0.2s ease;
+}
+
+.login-container:not(:has(input:placeholder-shown)) .btn-submit {
+    color: white;
+    background: black;
+    border-color: black;
+    pointer-events: auto;
+}
