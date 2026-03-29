@@ -1,0 +1,68 @@
+{% extends "main.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='gallery.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<style></style>
+
+<div class="gallery-layout">
+    
+    <form class="search-form" method="GET" action="/gallery">
+        <input type="text" name="q" class="search-input" placeholder="search..." value="{{ search_query }}">
+        <button type="submit" class="btn-search">&rarr;</button>
+    </form>
+
+    <div class="gallery-grid">
+        {% for drawing in drawings %}
+            <a href="#popup-{{ drawing['id'] }}" class="art-card" style="text-decoration: none; color: inherit;">
+                <div class="small-board">
+                    {% for char in drawing["payload"] if char in ["0", "1", "b"] %}
+                        <div class="micro-p micro-{{ char }}"></div>
+                    {% endfor %}
+                </div>
+                <div class="draw-title">{{ drawing["title"] }}</div>
+                <div class="by">by {{ drawing["username"] }}</div>
+            </a>
+
+            <div id="popup-{{ drawing['id'] }}" class="art-popup-overlay">
+                <div class="art-popup">
+                    <a href="#" class="btn-close" style="text-decoration: none; color: inherit;">&times;</a>
+                
+                    <div class="popup-body">
+                        <div class="big-board">
+                            {% for char in drawing["payload"] if char in ["0", "1", "b"] %}
+                                <div class="big-p big-{{ char }}"></div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="popup-sidebar">
+                            {% if drawing["username"] == session["username"] %}
+                                <form method="POST" action="/edit_title/{{ drawing['id'] }}" class="edit-form">
+                                    <input type="text" name="title" value="{{ drawing['title'] }}" class="popup-title-input" required maxlength="10">
+                                    <div class="popup-by">by {{ drawing["username"] }}</div>
+                                    <button type="submit" class="popup-btn">save name</button>
+                                </form>
+                                
+                                <form method="POST" action="/delete/{{ drawing['id'] }}" class="delete-form">
+                                    <button type="submit" class="popup-btn popup-btn-black">delete</button>
+                                </form>
+                            {% else %}
+                                <div class="popup-draw-title-noedit">{{ drawing["title"] }}</div>
+                                <div class="popup-by">by {{ drawing["username"] }}</div>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "main.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="login-main">
+    <form class="login-container" method="POST" action="/register">
+        <input class="field" type="text" name="username" placeholder="username" required maxlength="10">
+        <input class="field" type="password" name="password" placeholder="password" required>
+        <button type="submit" class="btn-submit">register &rarr;</button>
+    </form>
+</div>
+{% endblock %}
