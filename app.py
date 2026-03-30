@@ -1,12 +1,20 @@
 from flask import Flask, render_template, request, redirect, session
 import sqlite3
+import sys
 
 app = Flask(__name__)
 app.secret_key = "12345" 
 
 GRID_SIZE = 10
 TOTAL_PIXELS = GRID_SIZE * GRID_SIZE
+ITERATIONS = 55
 
+if "--iterations" in sys.argv:
+    try:
+        idx = sys.argv.index("--iterations")
+        ITERATIONS = int(sys.argv[idx + 1])
+    except (ValueError, IndexError):
+        pass
 
 conn = sqlite3.connect('database.db')
 with open('schema.sql', 'r') as f:
@@ -44,7 +52,6 @@ def ffloodfill (raw_payload, width, height):
     return "".join(grid).replace("b", "1")
 
 
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -66,7 +73,6 @@ def register():
 
     return render_template("register.html")
 
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -85,7 +91,6 @@ def login():
             return render_template("login.html")
 
     return render_template("login.html")
-
 
 @app.route("/logout")
 def logout():
@@ -112,7 +117,7 @@ def draw():
 
         return redirect("/gallery")
         
-    return render_template("draw.html", grid_size=GRID_SIZE, total_pixels=TOTAL_PIXELS)
+    return render_template("draw.html", grid_size=GRID_SIZE, total_pixels=TOTAL_PIXELS, iterations=ITERATIONS)
 
 
 @app.route("/gallery")
