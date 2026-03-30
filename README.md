@@ -12,6 +12,8 @@ Asenna ensin Flask: `pip install flask`
 
 Käynnistä sitten sovellus: `python app.py`
 
+Jos maalipurkki ei toimi, vähennä iteraatioiden määrää esim. `python app.py --iterations 10`
+
 ---
 
 Sovelluksesta löytyy piirtoalusta, kynätyökalu sekä maalipurkki, joka simuloi alueen flood fillin SVG-filttereiden avulla. Kynä on puolestaan toteutettu `:has()`-pseudoluokan avulla, joka seuraa työkalun tilaa ja hiiren liikkeitä.
