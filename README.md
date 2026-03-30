@@ -24,7 +24,7 @@ Vaikka sainkin SVG-filtterit lopulta tukemaan eri värejä[^2], pitäydyn ehkä 
 
 Sivu on testattu Edgellä ja Firefox Developer Editionilla. Koska flood fill on simuloitu SVG-filttereiden avulla ilman rekursiota, iterointi on koodattu suoraan HTML-tiedostoon. DOM-elementtien määrä voi siis olla hyvinkin suuri, ja sivun toimivuus on kiinni käyttäjän koneen tehoista. Esimerkiksi omalla koneella U-kirjaimen muotoisen alueen täyttäminen vaatii vähintään 55 iteraatiota.
 
-Vanha demo-sivu löytyy [täältä](https://1777777777777.github.io/paint.html/).
+~Vanha demo-sivu löytyy [täältä](https://1777777777777.github.io/paint.html/).~
 
 Alla oleva GIF havainnollistaa filttereiden toimintaa.[^3]
 
