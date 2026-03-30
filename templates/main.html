@@ -10,7 +10,7 @@
     {% if 'username' in session %}
         <a href="/" class="tab {% if request.path == '/' %}active{% endif %}">draw</a>
         <a href="/gallery" class="tab {% if request.path == '/gallery' %}active{% endif %}">gallery</a>
-        <a href="/logout" class="tab {% if request.path == '/logout' %}active{% endif %}">profile</a>
+        <a href="/profile" class="tab {% if request.path == '/profile' %}active{% endif %}">profile</a>
 
     {% else %}
         <a href="/login" class="tab {% if request.path == '/login' %}active{% endif %}">login</a>
