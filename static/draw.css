@@ -24,7 +24,10 @@
     width: 100%;    
     color: black;
     margin-top: 10px;
+    font-family: monospace;
+    letter-spacing: 0.05em;
 }
+
 
 #board { 
     border: 1px solid black;
@@ -87,7 +90,7 @@ input[type="radio"] {
     cursor: pointer; 
     text-align: left; 
     letter-spacing: 0.1em; 
-    transition: 0.1s; 
+    /* transition: 0.1s; */ 
     display: block;
 }
 
