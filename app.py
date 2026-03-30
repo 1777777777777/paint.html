@@ -175,9 +175,8 @@ def delete_drawing(drawing_id):
 
 @app.route("/profile")
 def profile():
-    if "username" not in session:
-        return redirect("/login")
-    return render_template("profile.html")
+    session.pop("username", None)
+    return render_template("profile.html"), 403
 
 
 
