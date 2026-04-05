@@ -7,7 +7,7 @@ app.secret_key = "12345"
 
 GRID_SIZE = 10
 TOTAL_PIXELS = GRID_SIZE * GRID_SIZE
-ITERATIONS = 55
+ITERATIONS = 30
 
 if "--iterations" in sys.argv:
     try:
