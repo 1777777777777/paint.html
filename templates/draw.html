@@ -83,124 +83,6 @@
                 <feFuncA type="discrete" tableValues="0 1 0" />
             </feComponentTransfer>
             
-            {% if iterations == 55 %}
-            <feMorphology in="seed0" operator="dilate" radius="16" result="dilate1"></feMorphology>
-            <feComposite in="dilate1" in2="limit" operator="out" result="seed1"></feComposite>
-            <feMorphology in="seed1" operator="dilate" radius="16" result="dilate2"></feMorphology>
-            <feComposite in="dilate2" in2="limit" operator="out" result="seed2"></feComposite>
-            <feMorphology in="seed2" operator="dilate" radius="16" result="dilate3"></feMorphology>
-            <feComposite in="dilate3" in2="limit" operator="out" result="seed3"></feComposite>
-            <feMorphology in="seed3" operator="dilate" radius="16" result="dilate4"></feMorphology>
-            <feComposite in="dilate4" in2="limit" operator="out" result="seed4"></feComposite>
-            <feMorphology in="seed4" operator="dilate" radius="16" result="dilate5"></feMorphology>
-            <feComposite in="dilate5" in2="limit" operator="out" result="seed5"></feComposite>
-            <feMorphology in="seed5" operator="dilate" radius="16" result="dilate6"></feMorphology>
-            <feComposite in="dilate6" in2="limit" operator="out" result="seed6"></feComposite>
-            <feMorphology in="seed6" operator="dilate" radius="16" result="dilate7"></feMorphology>
-            <feComposite in="dilate7" in2="limit" operator="out" result="seed7"></feComposite>
-            <feMorphology in="seed7" operator="dilate" radius="16" result="dilate8"></feMorphology>
-            <feComposite in="dilate8" in2="limit" operator="out" result="seed8"></feComposite>
-            <feMorphology in="seed8" operator="dilate" radius="16" result="dilate9"></feMorphology>
-            <feComposite in="dilate9" in2="limit" operator="out" result="seed9"></feComposite>
-            <feMorphology in="seed9" operator="dilate" radius="16" result="dilate10"></feMorphology>
-            <feComposite in="dilate10" in2="limit" operator="out" result="seed10"></feComposite>
-            <feMorphology in="seed10" operator="dilate" radius="16" result="dilate11"></feMorphology>
-            <feComposite in="dilate11" in2="limit" operator="out" result="seed11"></feComposite>
-            <feMorphology in="seed11" operator="dilate" radius="16" result="dilate12"></feMorphology>
-            <feComposite in="dilate12" in2="limit" operator="out" result="seed12"></feComposite>
-            <feMorphology in="seed12" operator="dilate" radius="16" result="dilate13"></feMorphology>
-            <feComposite in="dilate13" in2="limit" operator="out" result="seed13"></feComposite>
-            <feMorphology in="seed13" operator="dilate" radius="16" result="dilate14"></feMorphology>
-            <feComposite in="dilate14" in2="limit" operator="out" result="seed14"></feComposite>
-            <feMorphology in="seed14" operator="dilate" radius="16" result="dilate15"></feMorphology>
-            <feComposite in="dilate15" in2="limit" operator="out" result="seed15"></feComposite>
-            <feMorphology in="seed15" operator="dilate" radius="16" result="dilate16"></feMorphology>
-            <feComposite in="dilate16" in2="limit" operator="out" result="seed16"></feComposite>
-            <feMorphology in="seed16" operator="dilate" radius="16" result="dilate17"></feMorphology>
-            <feComposite in="dilate17" in2="limit" operator="out" result="seed17"></feComposite>
-            <feMorphology in="seed17" operator="dilate" radius="16" result="dilate18"></feMorphology>
-            <feComposite in="dilate18" in2="limit" operator="out" result="seed18"></feComposite>
-            <feMorphology in="seed18" operator="dilate" radius="16" result="dilate19"></feMorphology>
-            <feComposite in="dilate19" in2="limit" operator="out" result="seed19"></feComposite>
-            <feMorphology in="seed19" operator="dilate" radius="16" result="dilate20"></feMorphology>
-            <feComposite in="dilate20" in2="limit" operator="out" result="seed20"></feComposite>
-            <feMorphology in="seed20" operator="dilate" radius="16" result="dilate21"></feMorphology>
-            <feComposite in="dilate21" in2="limit" operator="out" result="seed21"></feComposite>
-            <feMorphology in="seed21" operator="dilate" radius="16" result="dilate22"></feMorphology>
-            <feComposite in="dilate22" in2="limit" operator="out" result="seed22"></feComposite>
-            <feMorphology in="seed22" operator="dilate" radius="16" result="dilate23"></feMorphology>
-            <feComposite in="dilate23" in2="limit" operator="out" result="seed23"></feComposite>
-            <feMorphology in="seed23" operator="dilate" radius="16" result="dilate24"></feMorphology>
-            <feComposite in="dilate24" in2="limit" operator="out" result="seed24"></feComposite>
-            <feMorphology in="seed24" operator="dilate" radius="16" result="dilate25"></feMorphology>
-            <feComposite in="dilate25" in2="limit" operator="out" result="seed25"></feComposite>
-            <feMorphology in="seed25" operator="dilate" radius="16" result="dilate26"></feMorphology>
-            <feComposite in="dilate26" in2="limit" operator="out" result="seed26"></feComposite>
-            <feMorphology in="seed26" operator="dilate" radius="16" result="dilate27"></feMorphology>
-            <feComposite in="dilate27" in2="limit" operator="out" result="seed27"></feComposite>
-            <feMorphology in="seed27" operator="dilate" radius="16" result="dilate28"></feMorphology>
-            <feComposite in="dilate28" in2="limit" operator="out" result="seed28"></feComposite>
-            <feMorphology in="seed28" operator="dilate" radius="16" result="dilate29"></feMorphology>
-            <feComposite in="dilate29" in2="limit" operator="out" result="seed29"></feComposite>
-            <feMorphology in="seed29" operator="dilate" radius="16" result="dilate30"></feMorphology>
-            <feComposite in="dilate30" in2="limit" operator="out" result="seed30"></feComposite>
-            <feMorphology in="seed30" operator="dilate" radius="16" result="dilate31"></feMorphology>
-            <feComposite in="dilate31" in2="limit" operator="out" result="seed31"></feComposite>
-            <feMorphology in="seed31" operator="dilate" radius="16" result="dilate32"></feMorphology>
-            <feComposite in="dilate32" in2="limit" operator="out" result="seed32"></feComposite>
-            <feMorphology in="seed32" operator="dilate" radius="16" result="dilate33"></feMorphology>
-            <feComposite in="dilate33" in2="limit" operator="out" result="seed33"></feComposite>
-            <feMorphology in="seed33" operator="dilate" radius="16" result="dilate34"></feMorphology>
-            <feComposite in="dilate34" in2="limit" operator="out" result="seed34"></feComposite>
-            <feMorphology in="seed34" operator="dilate" radius="16" result="dilate35"></feMorphology>
-            <feComposite in="dilate35" in2="limit" operator="out" result="seed35"></feComposite>
-            <feMorphology in="seed35" operator="dilate" radius="16" result="dilate36"></feMorphology>
-            <feComposite in="dilate36" in2="limit" operator="out" result="seed36"></feComposite>
-            <feMorphology in="seed36" operator="dilate" radius="16" result="dilate37"></feMorphology>
-            <feComposite in="dilate37" in2="limit" operator="out" result="seed37"></feComposite>
-            <feMorphology in="seed37" operator="dilate" radius="16" result="dilate38"></feMorphology>
-            <feComposite in="dilate38" in2="limit" operator="out" result="seed38"></feComposite>
-            <feMorphology in="seed38" operator="dilate" radius="16" result="dilate39"></feMorphology>
-            <feComposite in="dilate39" in2="limit" operator="out" result="seed39"></feComposite>
-            <feMorphology in="seed39" operator="dilate" radius="16" result="dilate40"></feMorphology>
-            <feComposite in="dilate40" in2="limit" operator="out" result="seed40"></feComposite>
-            <feMorphology in="seed40" operator="dilate" radius="16" result="dilate41"></feMorphology>
-            <feComposite in="dilate41" in2="limit" operator="out" result="seed41"></feComposite>
-            <feMorphology in="seed41" operator="dilate" radius="16" result="dilate42"></feMorphology>
-            <feComposite in="dilate42" in2="limit" operator="out" result="seed42"></feComposite>
-            <feMorphology in="seed42" operator="dilate" radius="16" result="dilate43"></feMorphology>
-            <feComposite in="dilate43" in2="limit" operator="out" result="seed43"></feComposite>
-            <feMorphology in="seed43" operator="dilate" radius="16" result="dilate44"></feMorphology>
-            <feComposite in="dilate44" in2="limit" operator="out" result="seed44"></feComposite>
-            <feMorphology in="seed44" operator="dilate" radius="16" result="dilate45"></feMorphology>
-            <feComposite in="dilate45" in2="limit" operator="out" result="seed45"></feComposite>
-            <feMorphology in="seed45" operator="dilate" radius="16" result="dilate46"></feMorphology>
-            <feComposite in="dilate46" in2="limit" operator="out" result="seed46"></feComposite>
-            <feMorphology in="seed46" operator="dilate" radius="16" result="dilate47"></feMorphology>
-            <feComposite in="dilate47" in2="limit" operator="out" result="seed47"></feComposite>
-            <feMorphology in="seed47" operator="dilate" radius="16" result="dilate48"></feMorphology>
-            <feComposite in="dilate48" in2="limit" operator="out" result="seed48"></feComposite>
-            <feMorphology in="seed48" operator="dilate" radius="16" result="dilate49"></feMorphology>
-            <feComposite in="dilate49" in2="limit" operator="out" result="seed49"></feComposite>
-            <feMorphology in="seed49" operator="dilate" radius="16" result="dilate50"></feMorphology>
-            <feComposite in="dilate50" in2="limit" operator="out" result="seed50"></feComposite>
-            <feMorphology in="seed50" operator="dilate" radius="16" result="dilate51"></feMorphology>
-            <feComposite in="dilate51" in2="limit" operator="out" result="seed51"></feComposite>
-            <feMorphology in="seed51" operator="dilate" radius="16" result="dilate52"></feMorphology>
-            <feComposite in="dilate52" in2="limit" operator="out" result="seed52"></feComposite>
-            <feMorphology in="seed52" operator="dilate" radius="16" result="dilate53"></feMorphology>
-            <feComposite in="dilate53" in2="limit" operator="out" result="seed53"></feComposite>
-            <feMorphology in="seed53" operator="dilate" radius="16" result="dilate54"></feMorphology>
-            <feComposite in="dilate54" in2="limit" operator="out" result="seed54"></feComposite>
-            <feMorphology in="seed54" operator="dilate" radius="16" result="dilate55"></feMorphology>
-            <feComposite in="dilate55" in2="limit" operator="out" result="seed55"></feComposite>
-
-                <feMerge>
-                    <feMergeNode in="seed55"></feMergeNode>
-                    <feMergeNode in="limit"></feMergeNode>
-                </feMerge>
-                
-            {% else %}
             {% for i in range(1, iterations + 1) %}
             <feMorphology in="seed{{ i - 1 }}" operator="dilate" radius="16" result="dilate{{ i }}"></feMorphology>
             <feComposite in="dilate{{ i }}" in2="limit" operator="out" result="seed{{ i }}"></feComposite>
@@ -210,7 +92,6 @@
                     <feMergeNode in="seed{{ iterations }}"></feMergeNode>
                     <feMergeNode in="limit"></feMergeNode>
                 </feMerge>
-            {% endif %}
         </filter>
     </defs>
 </svg>
