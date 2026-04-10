@@ -1,55 +1,11 @@
 from flask import Flask, render_template, request, redirect, session
 import sqlite3
-import sys
+import config
+from db import get_connection
+from draw import ffloodfill, GRID_SIZE, TOTAL_PIXELS, ITERATIONS
 
 app = Flask(__name__)
-app.secret_key = "12345" 
-
-GRID_SIZE = 10
-TOTAL_PIXELS = GRID_SIZE * GRID_SIZE
-ITERATIONS = 30
-
-if "--iterations" in sys.argv:
-    try:
-        idx = sys.argv.index("--iterations")
-        ITERATIONS = int(sys.argv[idx + 1])
-    except (ValueError, IndexError):
-        pass
-
-conn = sqlite3.connect('database.db')
-with open('schema.sql', 'r') as f:
-    conn.executescript(f.read())
-conn.commit()
-conn.close()
-
-
-def ffloodfill (raw_payload, width, height):
-    grid = [i for i in raw_payload if i in ["0", "1", "b"]]
-    queue = [i for i, j in enumerate(grid) if j == 'b']
-    
-    while queue:
-        near = []
-        curr = queue.pop(0)
-        row = curr // width
-        col = curr % width
-
-        if row > 0:
-            near.append(curr - width)
-        if row < height - 1:
-            near.append(curr + width)
-        if col > 0:
-            near.append(curr - 1)
-        if col < width - 1:
-            near.append(curr + 1)
-
-        for n in near:
-            if grid[n] == "0":
-                grid[n] = "b"
-
-                queue.append(n)
-                
-
-    return "".join(grid).replace("b", "1")
+app.secret_key = config.secret_key
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -58,7 +14,7 @@ def register():
         username = request.form["username"]
         password = request.form["password"]
 
-        conn = sqlite3.connect("database.db")
+        conn = get_connection()
         cursor = conn.execute("SELECT * FROM users WHERE username = ?", (username,))
         if cursor.fetchone():
             conn.close()
@@ -79,7 +35,7 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
-        conn = sqlite3.connect("database.db")
+        conn = get_connection()
         cursor = conn.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
         user = cursor.fetchone()
         conn.close()
@@ -110,7 +66,7 @@ def draw():
 
         if raw_payload:
             final_payload = ffloodfill(raw_payload, GRID_SIZE, GRID_SIZE)
-            conn = sqlite3.connect("database.db")
+            conn = get_connection()
             conn.execute("INSERT INTO drawings (username, title, payload) VALUES (?, ?, ?)", (username, title, final_payload))
             conn.commit()
             conn.close()
@@ -127,7 +83,7 @@ def gallery():
 
     search_query = request.args.get("q", "")
 
-    conn = sqlite3.connect("database.db")
+    conn = get_connection()
     conn.row_factory = sqlite3.Row 
     
     if search_query:
@@ -155,7 +111,7 @@ def edit_title(drawing_id):
     username = session["username"]
 
     if new_title:
-        conn = sqlite3.connect("database.db")
+        conn = get_connection()
         conn.execute("UPDATE drawings SET title = ? WHERE id = ? AND username = ?", (new_title, drawing_id, username))
         conn.commit()
         conn.close()
@@ -170,7 +126,7 @@ def delete_drawing(drawing_id):
 
     username = session["username"]
 
-    conn = sqlite3.connect("database.db")
+    conn = get_connection()
     conn.execute("DELETE FROM drawings WHERE id = ? AND username = ?", (drawing_id, username))
     conn.commit()
     conn.close()
