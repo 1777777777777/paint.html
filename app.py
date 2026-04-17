@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, flash
 import sqlite3
 import config
-from db import get_connection
+import db
+import users
 from draw import ffloodfill, GRID_SIZE, TOTAL_PIXELS, ITERATIONS
 
 app = Flask(__name__)
@@ -14,18 +15,13 @@ def register():
         username = request.form["username"]
         password = request.form["password"]
 
-        conn = get_connection()
-        cursor = conn.execute("SELECT * FROM users WHERE username = ?", (username,))
-        if cursor.fetchone():
-            conn.close()
-            return render_template("register.html")
-
-        conn.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
-        conn.commit()
-        conn.close()
-        
-        session["username"] = username
-        return redirect("/")
+        if users.create_user(username, password):
+            session["username"] = username
+            return redirect("/")
+        else:
+            flash("Username is already taken.")
+            filled = {"username": username}
+            return render_template("register.html", filled=filled)
 
     return render_template("register.html")
 
@@ -35,16 +31,13 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
-        conn = get_connection()
-        cursor = conn.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
-        user = cursor.fetchone()
-        conn.close()
-
-        if user:
+        if users.check_login(username, password):
             session["username"] = username
             return redirect("/")
         else:
-            return render_template("login.html")
+            flash("Invalid username or password")
+            filled = {"username": username}
+            return render_template("login.html", filled=filled)
 
     return render_template("login.html")
 
@@ -66,10 +59,7 @@ def draw():
 
         if raw_payload:
             final_payload = ffloodfill(raw_payload, GRID_SIZE, GRID_SIZE)
-            conn = get_connection()
-            conn.execute("INSERT INTO drawings (username, title, payload) VALUES (?, ?, ?)", (username, title, final_payload))
-            conn.commit()
-            conn.close()
+            db.execute("INSERT INTO drawings (username, title, payload) VALUES (?, ?, ?)", (username, title, final_payload))
 
         return redirect("/gallery")
         
@@ -82,23 +72,18 @@ def gallery():
         return redirect("/login")
 
     search_query = request.args.get("q", "")
-
-    conn = get_connection()
-    conn.row_factory = sqlite3.Row 
     
     if search_query:
-        cursor = conn.execute('''
+        drawings = db.query('''
             SELECT * FROM drawings 
             WHERE title LIKE ? OR username LIKE ? 
             ORDER BY id DESC
         ''', (f"%{search_query}%", f"%{search_query}%"))
 
     else:
-        cursor = conn.execute("SELECT * FROM drawings ORDER BY id DESC")
+        drawings = db.query("SELECT * FROM drawings ORDER BY id DESC")
         
-    drawings = cursor.fetchall()
-    conn.close()
-
+        
     return render_template("gallery.html", drawings=drawings, search_query=search_query)
 
 
@@ -111,10 +96,7 @@ def edit_title(drawing_id):
     username = session["username"]
 
     if new_title:
-        conn = get_connection()
-        conn.execute("UPDATE drawings SET title = ? WHERE id = ? AND username = ?", (new_title, drawing_id, username))
-        conn.commit()
-        conn.close()
+        db.execute("UPDATE drawings SET title = ? WHERE id = ? AND username = ?", (new_title, drawing_id, username))
 
     return redirect(request.referrer or "/gallery")
 
@@ -126,10 +108,7 @@ def delete_drawing(drawing_id):
 
     username = session["username"]
 
-    conn = get_connection()
-    conn.execute("DELETE FROM drawings WHERE id = ? AND username = ?", (drawing_id, username))
-    conn.commit()
-    conn.close()
+    db.execute("DELETE FROM drawings WHERE id = ? AND username = ?", (drawing_id, username))
 
     return redirect(request.referrer or "/gallery")
 
