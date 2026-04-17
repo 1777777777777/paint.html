@@ -9,6 +9,16 @@
     flex-direction: column;
     gap: 16px;
     width: 250px;
+    position: relative;
+}
+
+.message {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    top: -30px;
+    width: 100%;
+    position: absolute;
 }
 
 .field {

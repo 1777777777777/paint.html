@@ -7,7 +7,12 @@
 {% block content %}
 <div class="login-main">
     <form class="login-container" method="POST" action="/register">
-        <input class="field" type="text" name="username" placeholder="username" required maxlength="10">
+        
+        {% for message in get_flashed_messages() %}
+            <div class="message">{{ message }}</div>
+        {% endfor %}
+
+        <input class="field" type="text" name="username" placeholder="username" required maxlength="10" value="{{ filled.username if filled else '' }}">
         <input class="field" type="password" name="password" placeholder="password" required>
         <button type="submit" class="btn-submit">register &rarr;</button>
     </form>
