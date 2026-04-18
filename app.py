@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect, session, flash
+from flask import Flask, render_template, request, redirect, session, flash, abort
 import sqlite3
+import secrets
 import config
 import db
 import users
@@ -7,6 +8,12 @@ from draw import ffloodfill, GRID_SIZE, TOTAL_PIXELS, ITERATIONS
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+def check_csrf():
+    if "csrf_token" not in request.form:
+        abort(403)
+    if request.form["csrf_token"] != session.get("csrf_token"):
+        abort(403)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -21,9 +28,10 @@ def register():
             filled = {"username": username}
             return render_template("register.html", filled=filled)
 
-        # the course example leaked db stuff into routing here by the way for some reason
+        # to whom it may concern: the course example leaked db stuff into routing here by the way for some reason
         if users.create_user(username, password):
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
             flash("Username is already taken.")
@@ -40,6 +48,7 @@ def login():
 
         if users.check_login(username, password):
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
             flash("Invalid username or password")
@@ -60,6 +69,8 @@ def draw():
         return redirect("/login")
 
     if request.method == "POST":
+        check_csrf()
+
         raw_payload = request.form.get("payload", "")
         title = request.form.get("title", "untitled")
         username = session["username"] 
@@ -99,6 +110,8 @@ def edit_title(drawing_id):
     if "username" not in session:
         return redirect("/login")
 
+    check_csrf()
+
     new_title = request.form.get("title")
     username = session["username"]
 
@@ -113,6 +126,7 @@ def delete_drawing(drawing_id):
     if "username" not in session:
         return redirect("/login")
 
+    check_csrf()
     username = session["username"]
 
     db.execute("DELETE FROM drawings WHERE id = ? AND username = ?", (drawing_id, username))
