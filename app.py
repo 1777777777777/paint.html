@@ -14,7 +14,14 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        password_confirm = request.form.get("password_confirm")
 
+        if password != password_confirm:
+            flash("Passwords do not match.")
+            filled = {"username": username}
+            return render_template("register.html", filled=filled)
+
+        # the course example leaked db stuff into routing here by the way for some reason
         if users.create_user(username, password):
             session["username"] = username
             return redirect("/")
