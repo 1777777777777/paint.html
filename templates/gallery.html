@@ -41,12 +41,16 @@
                         <div class="popup-sidebar">
                             {% if drawing["username"] == session["username"] %}
                                 <form method="POST" action="/edit_title/{{ drawing['id'] }}" class="edit-form">
+                                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
                                     <input type="text" name="title" value="{{ drawing['title'] }}" class="popup-title-input" required maxlength="10">
                                     <div class="popup-by">by {{ drawing["username"] }}</div>
                                     <button type="submit" class="popup-btn">save name</button>
                                 </form>
                                 
                                 <form method="POST" action="/delete/{{ drawing['id'] }}" class="delete-form">
+                                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
                                     <button type="submit" class="popup-btn popup-btn-black">delete</button>
                                 </form>
                             {% else %}

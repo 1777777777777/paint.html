@@ -57,6 +57,7 @@
             </div>
 
             <form id="publish-form" action="/" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 
                 <div class="barcode-container">
                     <div class="barcode-container2">
