@@ -49,10 +49,21 @@
     display: flex;
     flex-direction: column;
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 }
 
-.draw-title { font-size: 12px; letter-spacing: 0.1em; padding-top: 6px; }
-.by { font-size: 10px; color: black; padding-bottom: 6px; }
+.draw-title {
+    font-size: 12px; 
+    letter-spacing: 0.1em;
+    padding-top: 6px;
+}
+
+.by {
+    font-size: 10px;
+    color: black;
+    padding-bottom: 6px;
+}
 
 
 .small-board {
@@ -115,8 +126,11 @@
     background: transparent;
     border: none;
     font-size: 16px;
-    font-family: monospace;
+    /* font-family: monospace; */
+    text-decoration: none;
+    color: black;
 }
+
 
 .popup-body {
     display: flex;
@@ -216,3 +230,9 @@
 .delete-form {
     margin-top: 8px;
 }
+
+
+
+
+
+
