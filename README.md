@@ -8,7 +8,7 @@ paint.html on toteutettu täysin ilman JavaScriptiä.
 * Käyttäjä näkee sovellukseen lisätyt piirrokset.
 * Käyttäjä pystyy etsimään piirroksia hakusanalla.
 * Sovelluksessa ei vielä ole käyttäjäsivuja eikä piirrosten luokittelua...
-* Käyttäjä pystyy tykkäämään piirroksista. Tykkäyksiä klikkaamalla avautuu lista kaikista kyseisestä piirroksesta tykänneistä käyttäjistä. (CSS vielä kesken, joten näyttää paremmalta kun tykkää muiden kuin omien piirroksista)
+* Käyttäjä pystyy tykkäämään piirroksista. Klikkaamalla näkee kaikki tykkääjät. (CSS vielä kesken, joten näyttää paremmalta kun tykkää muiden kuin omien piirroksista)
 
 Asenna ensin Flask: `pip install flask`
 
