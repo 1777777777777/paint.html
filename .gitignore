@@ -1,2 +1,4 @@
 old/
-
+database.db
+__pycache__/
+*.pyc
