@@ -1,7 +1,8 @@
 {% extends "main.html" %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='gallery.css') }}">
+        <link rel="stylesheet" href="/static/gallery.css">
+        <link rel="stylesheet" href="/static/liked_by.css">
 {% endblock %}
 
 {% block content %}
@@ -17,7 +18,7 @@
 
     <div class="gallery-grid">
         {% for drawing in drawings %}
-            <a href="#popup-{{ drawing['id'] }}" class="art-card" style="text-decoration: none; color: inherit;">
+            <a href="#popup-{{ drawing['id'] }}" class="art-card">
                 <div class="small-board">
                     {% for char in drawing["payload"] if char in ["0", "1", "b"] %}
                         <div class="micro-p micro-{{ char }}"></div>
@@ -58,9 +59,25 @@
                                 <div class="popup-by">by {{ drawing["username"] }}</div>
                             {% endif %}
 
+                            {% include 'liked_by.html' %}
+
                         </div>
 
                     </div>
+                </div>
+            </div>
+
+            <div id="liked-by-{{ drawing['id'] }}" class="liked-by-popup-overlay">
+                <div class="liked-by-popup">
+                    <a href="#popup-{{ drawing['id'] }}" class="btn-close">&times;</a>
+                    <div class="liked-by-header">liked by</div>
+
+                    <div class="liked-by-list">
+                        {% for user in drawing['like_users']|reverse %}
+                            <div class="liked-by-user">{{ user }}</div>
+                        {% endfor %}
+                    </div>
+
                 </div>
             </div>
 

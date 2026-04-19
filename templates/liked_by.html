@@ -1,0 +1,29 @@
+<div class="liked-by">
+
+    {% if drawing['like_users'] %}
+        <a href="#liked-by-{{ drawing['id'] }}" class="liked-by-label" style="text-decoration: none; color: inherit; display: inline-block;">
+            {% set num_likes = drawing['like_users']|length %}
+            {% set latest = drawing['like_users'][-1] %}
+
+            {% if num_likes == 1 %}
+                liked by {{ latest }}
+            {% else %}
+                liked by {{ latest }} and {{ num_likes - 1 }} others
+            {% endif %}
+        </a>
+        
+    {% endif %}
+</div>
+
+<form method="POST" action="/like/{{ drawing['id'] }}" class="like-form">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
+    <button type="submit" class="popup-btn {% if session['username'] in drawing['like_users'] %}popup-btn-black{% endif %}">
+        {% if session["username"] in drawing['like_users'] %}
+            unlike
+        {% else %}
+            like
+        {% endif %}
+    </button>
+
+</form>

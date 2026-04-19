@@ -1,0 +1,71 @@
+.liked-by {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 10px;
+}
+
+.liked-by-label {
+    cursor: pointer;
+}
+
+.liked-by-popup-overlay:target {
+    display: flex;
+}
+
+.liked-by-popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.85);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.liked-by-popup {
+    border: 1px solid black;
+    background: white;
+    position: relative;
+    margin-top: -435px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 438px;
+    height: 266px;
+    box-sizing: border-box;
+    padding-top: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-bottom: 0px;
+}
+
+.liked-by-list {
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    flex: 1;
+    min-height: 0;
+    padding-top: 16px;
+}
+
+
+.liked-by-header {
+    font-size: 14px;
+    border-bottom: 1px solid black;
+    padding-bottom: 8px;
+    flex-shrink: 0;
+}
+
+.liked-by-user {
+    margin-bottom: 12px;
+}
+
+
+.liked-by {
+    margin-bottom: 8px;
+}
+
+
