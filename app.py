@@ -28,7 +28,6 @@ def gallery_redirect(drawing_id =None):
         return redirect(referrer)
 
 
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -53,6 +52,7 @@ def register():
 
     return render_template("register.html")
 
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -69,6 +69,7 @@ def login():
             return render_template("login.html", filled=filled)
 
     return render_template("login.html")
+
 
 @app.route("/logout")
 def logout():
@@ -151,11 +152,15 @@ def like_drawing(drawing_id):
     return gallery_redirect(drawing_id)
 
 
-
 @app.route("/profile")
 def profile():
     session.pop("username", None)
     return render_template("profile.html"), 403
+
+
+@app.teardown_appcontext
+def teardown_db(exception):
+    db.close_connection(exception)
 
 
 
