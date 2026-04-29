@@ -86,8 +86,12 @@ def draw():
         check_csrf()
 
         raw_payload = request.form.get("payload", "")
-        title = request.form.get("title", "untitled")
-        username = session["username"] 
+        title = request.form.get("title") or "untitled"
+
+        if len(title) > 12:
+            abort(403)
+
+        username = session["username"]
 
         if raw_payload:
             final_payload = ffloodfill(raw_payload, GRID_SIZE, GRID_SIZE)
@@ -120,8 +124,10 @@ def edit_title(drawing_id):
     new_title = request.form.get("title")
     username = session["username"]
 
-    if new_title:
-        drawings.drawing_edit_title(drawing_id, username, new_title)
+    if not new_title or len(new_title) > 12:
+        abort(403)
+
+    drawings.drawing_edit_title(drawing_id, username, new_title)
 
     return gallery_redirect(drawing_id)
 

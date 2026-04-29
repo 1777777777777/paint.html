@@ -22,7 +22,7 @@
 {% block content %}
     <div id="panel-draw">
     <div class="board-container">
-        <input type="text" id="draw-title" name="title" form="publish-form" value="untitled" maxlength="10">
+        <input type="text" id="draw-title" name="title" form="publish-form" value="untitled" maxlength="12">
             <div id="board" style="grid-template-columns: repeat({{ grid_size }}, 32px);">
                 {% for i in range(1, total_pixels + 1) %}
                     <div class="p" id="p{{i}}"></div>
