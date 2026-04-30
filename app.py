@@ -6,6 +6,7 @@ import db
 import users
 import drawings
 from draw import ffloodfill, GRID_SIZE, TOTAL_PIXELS, ITERATIONS
+import math
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -15,6 +16,7 @@ def check_csrf():
         abort(403)
     if request.form["csrf_token"] != session.get("csrf_token"):
         abort(403)
+
 
 def gallery_redirect(drawing_id =None):
     referrer = request.referrer or "/gallery"
@@ -103,15 +105,28 @@ def draw():
 
 
 @app.route("/gallery")
-def gallery():
+@app.route("/gallery/<int:page>")
+def gallery(page=1):
     if "username" not in session:
         return redirect("/login")
 
     search_query = request.args.get("q", "")
+    page_size = 12
     
-    drawings_list = drawings.drawings_search(search_query)
+    total_count = drawings.drawings_count(search_query)
+    page_count = math.ceil(total_count / page_size)
+    page_count = max(page_count, 1)
+
+    query_string = f"?q={search_query}" if search_query else ""
+
+    if page < 1:
+        return redirect(f"/gallery/1{query_string}")
+    if page > page_count:
+        return redirect(f"/gallery/{page_count}{query_string}")
+    
+    drawings_list = drawings.drawings_search(search_query, page, page_size)
         
-    return render_template("gallery.html", drawings=drawings_list, search_query=search_query)
+    return render_template("gallery.html", drawings=drawings_list, search_query=search_query, page=page, page_count=page_count)
 
 
 @app.route("/edit_title/<int:drawing_id>", methods=["POST"])
