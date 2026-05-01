@@ -101,7 +101,8 @@ def draw():
 
         return redirect("/gallery")
         
-    return render_template("draw.html", grid_size=GRID_SIZE, total_pixels=TOTAL_PIXELS, iterations=ITERATIONS)
+    barcode_vis_id = secrets.token_hex(4)
+    return render_template("draw.html", grid_size=GRID_SIZE, total_pixels=TOTAL_PIXELS, iterations=ITERATIONS, barcode_vis_id=barcode_vis_id)
 
 
 @app.route("/gallery")
