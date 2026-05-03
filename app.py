@@ -97,7 +97,7 @@ def draw():
         username = session["username"]
         
         db_tags = db.query("SELECT name FROM tags")
-        all_tags = [t['name'] for t in db_tags]
+        all_tags = [t["name"] for t in db_tags]
         valid_tags = [tag for tag in tags if tag in all_tags]
 
         if raw_payload:
@@ -108,7 +108,7 @@ def draw():
         
     barcode_vis_id = secrets.token_hex(4)
     db_tags = db.query("SELECT name FROM tags")
-    all_tags = [t['name'] for t in db_tags]
+    all_tags = [t["name"] for t in db_tags]
     return render_template("draw.html", grid_size=GRID_SIZE, total_pixels=TOTAL_PIXELS, iterations=ITERATIONS, barcode_vis_id=barcode_vis_id, all_tags=all_tags)
 
 
@@ -145,25 +145,30 @@ def gallery(page=1):
     drawings_list = drawings.drawings_search(search_query, page, page_size, tag_query)
     
     db_tags = db.query("SELECT name FROM tags")
-    all_tags = [t['name'] for t in db_tags]
+    all_tags = [t["name"] for t in db_tags]
         
     return render_template("gallery.html", drawings=drawings_list, search_query=search_query, tag_query=tag_query, page=page, page_count=page_count, all_tags=all_tags)
 
 
-@app.route("/edit_title/<int:drawing_id>", methods=["POST"])
-def edit_title(drawing_id):
+@app.route("/edit_info/<int:drawing_id>", methods=["POST"])
+def edit_info(drawing_id):
     if "username" not in session:
         return redirect("/login")
 
     check_csrf()
 
-    new_title = request.form.get("title")
+    new_title = request.form.get("title") or "untitled"
+    tags = request.form.getlist("tags")
     username = session["username"]
 
-    if not new_title or len(new_title) > 12:
+    if len(new_title) > 12:
         abort(403)
 
-    drawings.drawing_edit_title(drawing_id, username, new_title)
+    db_tags = db.query("SELECT name FROM tags")
+    all_tags = [t["name"] for t in db_tags]
+    valid_tags = [tag for tag in tags if tag in all_tags]
+
+    drawings.drawing_edit_info(drawing_id, username, new_title, valid_tags)
 
     return gallery_redirect(drawing_id)
 

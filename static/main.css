@@ -53,14 +53,6 @@ body {
     z-index: 2;
 }
 
-/*
-.tab:not(.active):hover {
-    color: #555; 
-     color: grey 
-}     
-*/
-
-
 #main {
     width: 514px;
     height: 399px;

@@ -71,15 +71,36 @@ def drawings_search(search_query="", page=1, page_size=10, tag_query=None):
     return result
 
 
-def drawing_edit_title(drawing_id, username, new_title):
+def drawing_edit_info(drawing_id, username, new_title, new_tags):
+    if not db.query(
+        """
+        SELECT id 
+        FROM drawings
+        WHERE id = ?
+        AND username = ?
+        """,
+        (drawing_id, username)):
+        
+        return
+
     db.execute(
         """
         UPDATE drawings
         SET title = ?
         WHERE id = ?
-        AND username = ?
         """,
-        (new_title, drawing_id, username))
+        (new_title, drawing_id))
+    
+    db.execute(
+        """
+        DELETE FROM drawing_tags
+        WHERE drawing_id = ?
+        """,
+        (drawing_id,))
+        
+    if new_tags:
+        for tag in new_tags:
+            db.execute("INSERT INTO drawing_tags (drawing_id, tag) VALUES (?, ?)", (drawing_id, tag))
 
 
 def drawing_delete(drawing_id, username):

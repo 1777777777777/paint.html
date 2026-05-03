@@ -56,27 +56,21 @@
                         </div>
 
                         <div class="popup-sidebar">
+                            <div class="popup-draw-title-noedit">{{ drawing["title"] }}</div>
+                            <div class="popup-by">by {{ drawing["username"] }}</div>
+
                             {% if drawing["username"] == session["username"] %}
-                                <form method="POST" action="/edit_title/{{ drawing['id'] }}" class="edit-form">
-                                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-
-                                    <input type="text" name="title" value="{{ drawing['title'] }}" class="popup-title-input" required maxlength="10">
-                                    <div class="popup-by">by {{ drawing["username"] }}</div>
-                                    <button type="submit" class="popup-btn">save name</button>
-                                </form>
-                                
-                                <form method="POST" action="/delete/{{ drawing['id'] }}" class="delete-form">
-                                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-
-                                    <button type="submit" class="popup-btn popup-btn-black">delete</button>
-                                </form>
+                                <a href="#edit-popup-{{ drawing['id'] }}" class="popup-btn edit-info-btn">edit info</a>
                             {% else %}
-                                <div class="popup-draw-title-noedit">{{ drawing["title"] }}</div>
-                                <div class="popup-by">by {{ drawing["username"] }}</div>
+                                {% if drawing["tags"] %}
+                                <div class="tagged">tags: {{ drawing["tags"] | join(", ") }}</div>
+                                {% endif %}
                             {% endif %}
+        
 
-                            {% include 'liked_by.html' %}
-
+                            <div style="margin-top: auto;">
+                                {% include "liked_by.html" %}
+                            </div>
                         </div>
 
                     </div>
@@ -89,13 +83,41 @@
                     <div class="liked-by-header">liked by</div>
 
                     <div class="liked-by-list">
-                        {% for user in drawing['like_users']|reverse %}
+                        {% for user in drawing["like_users"]|reverse %}
                             <div class="liked-by-user">{{ user }}</div>
                         {% endfor %}
                     </div>
 
                 </div>
             </div>
+
+            {% if drawing["username"] == session["username"] %}
+            <div id="edit-popup-{{ drawing['id'] }}" class="liked-by-popup-overlay">
+                <div class="liked-by-popup edit-popup-container">
+                    <a href="#popup-{{ drawing['id'] }}" class="btn-close">&times;</a>
+
+                    <form method="POST" action="/edit_info/{{ drawing['id'] }}" class="edit-form">
+                        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
+                        <input type="text" name="title" value="{{ drawing['title'] }}" placeholder="untitled" class="edit-title-input" maxlength="12">
+
+                        <div class="liked-by-list edit-tags">
+                            {% for tag in all_tags %}
+                            <label class="tag-item">
+                                <input type="checkbox" name="tags" value="{{ tag }}" {% if tag in drawing["tags"] %}checked{% endif %}> 
+                                {{ tag }}
+                            </label>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="edit-actions">
+                            <button type="submit" class="popup-btn">save changes</button>
+                            <button type="submit" formaction="/delete/{{ drawing['id'] }}" formnovalidate class="popup-btn popup-btn-black">delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
 
         {% endfor %}
     </div>

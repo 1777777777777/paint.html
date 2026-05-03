@@ -193,19 +193,6 @@ details[open].gallery-tag-btn summary {
 }
 
 
-.popup-title-input {
-    font-family: monospace;
-    font-size: 12px;
-    border: none;
-    border-bottom: 1px solid black;
-    padding-bottom: 8px;
-    outline: none;
-    width: 100%;
-    color: black;
-    margin-top: 10px;
-    background: transparent;
-}
-
 .popup-draw-title-noedit {
     font-size: 12px;
     border-bottom: 1px solid black;
@@ -217,10 +204,9 @@ details[open].gallery-tag-btn summary {
 
 .popup-by {
     font-size: 10px;
-    color: lightgrey;
     letter-spacing: 0.1em;
     margin-top: 8px;
-    margin-bottom: auto;
+    margin-bottom: 8px;
 }
 
 .edit-form {
@@ -249,10 +235,6 @@ details[open].gallery-tag-btn summary {
     color: white;
 }
 
-.delete-form {
-    margin-top: 8px;
-}
-
 
 .page-navigation {
     font-size: 14px;
@@ -269,6 +251,60 @@ details[open].gallery-tag-btn summary {
     padding-bottom: 0;
     padding-left: 8px;
     padding-right: 8px;
+}
+
+.edit-popup-container {
+    padding-bottom: 32px !important;
+}
+
+.edit-info-btn {
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+.edit-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 12px;
+    margin-top: 16px;
+    margin-bottom: 24px;
+}
+
+.edit-title-input {
+    font-size: 12px;
+    border: none;
+    border-bottom: 1px solid black;
+    padding-bottom: 8px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    outline: none;
+    color: black;
+    font-family: monospace;
+    letter-spacing: 0.05em;
+    width: 100%;
+    background: transparent;
+}
+
+.edit-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: auto;
+}
+
+.edit-actions .popup-btn {
+    flex: 1;
+    margin-top: 0;
+    text-align: center;
+}
+
+.tagged {
+    font-size: 10px;
+    color: lightgrey;
+    letter-spacing: 0.1em;
+    margin-top: 8px;
 }
 
 
