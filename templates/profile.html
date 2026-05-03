@@ -24,6 +24,7 @@
         {% if profile_user == session["username"] %}
             {% if edit_bio %}
                 <form action="/profile/{{ profile_user }}/bio" method="POST" class="profile-bio-form">
+                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
                     <textarea name="bio" class="profile-bio-input" maxlength="255">{% if bio %}{{ bio }}{% endif %}</textarea>
                     <button type="submit" class="profile-bio-save-btn">save bio</button>
                     <a href="/profile/{{ profile_user }}" class="profile-bio-edit-btn" style="margin-top: 0;">cancel</a>

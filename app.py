@@ -227,6 +227,8 @@ def update_bio(username):
     if "username" not in session or session["username"] != username:
         return redirect("/login")
         
+    check_csrf()
+        
     bio = request.form.get("bio", "").strip()
     if len(bio) > 255:
         abort(403)
