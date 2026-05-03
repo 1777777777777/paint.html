@@ -27,3 +27,7 @@ CREATE TABLE IF NOT EXISTS drawing_tags (
     tag TEXT NOT NULL REFERENCES tags(name),
     PRIMARY KEY (drawing_id, tag)
 );
+
+CREATE INDEX IF NOT EXISTS idx_drawings_username ON drawings(username);
+CREATE INDEX IF NOT EXISTS idx_likes_drawing_id ON likes(drawing_id);
+CREATE INDEX IF NOT EXISTS idx_likes_username ON likes(username);
