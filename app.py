@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, session, flash, abort
 import sqlite3
 import secrets
+import re
 import config
 import db
 import users
@@ -35,7 +36,19 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        password_confirm = request.form.get("password_confirm")
+        password_confirm = request.form["password_confirm"]
+
+        if not username:
+            flash("Username cannot be empty or only spaces.")
+            return render_template("register.html")
+
+        if not re.match(r"^[a-z0-9._-]+$", username):
+            flash("Username can only contain a-z, 0-9, ., -, _")
+            filled = {"username": username}
+            return render_template("register.html", filled=filled)
+
+        if len(username) > 12:
+            abort(403)
 
         if password != password_confirm:
             flash("Passwords do not match.")
@@ -88,7 +101,7 @@ def draw():
         check_csrf()
 
         raw_payload = request.form.get("payload", "")
-        title = request.form.get("title") or "untitled"
+        title = request.form.get("title", "").strip() or "untitled"
         tags = request.form.getlist("tags")
 
         if len(title) > 12:
@@ -157,7 +170,7 @@ def edit_info(drawing_id):
 
     check_csrf()
 
-    new_title = request.form.get("title") or "untitled"
+    new_title = request.form.get("title", "").strip() or "untitled"
     tags = request.form.getlist("tags")
     username = session["username"]
 
