@@ -209,6 +209,10 @@ details[open].gallery-tag-btn summary {
     margin-bottom: 8px;
 }
 
+.popup-by a {
+    color: black;
+}
+
 .edit-form {
     display: flex;
     flex-direction: column;

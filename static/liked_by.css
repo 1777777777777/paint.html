@@ -63,6 +63,10 @@
     margin-bottom: 12px;
 }
 
+.liked-by-user a {
+    color: black;
+}
+
 
 .liked-by {
     margin-bottom: 8px;

@@ -22,7 +22,7 @@
 
                         <div class="popup-sidebar">
                             <div class="popup-draw-title-noedit">{{ drawing["title"] }}</div>
-                            <div class="popup-by">by {{ drawing["username"] }}</div>
+                            <div class="popup-by">by <a href="/profile/{{ drawing['username'] }}">{{ drawing["username"] }}</a></div>
 
                             {% if drawing["username"] == session["username"] %}
                                 <a href="#edit-popup-{{ drawing['id'] }}" class="popup-btn edit-info-btn">edit info</a>
@@ -49,7 +49,7 @@
 
                     <div class="liked-by-list">
                         {% for user in drawing["like_users"]|reverse %}
-                            <div class="liked-by-user">{{ user }}</div>
+                            <div class="liked-by-user"><a href="/profile/{{ user }}">{{ user }}</a></div>
                         {% endfor %}
                     </div>
 
