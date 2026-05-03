@@ -1,0 +1,90 @@
+.profile-header-box {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    border: 1px solid black;
+    padding: 16px;
+    margin-bottom: 32px
+}
+
+.profile-username {
+    margin-top: 0;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid black;
+    padding-bottom: 8px;
+    letter-spacing: 0.1em;
+}
+
+.profile-bio {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.profile-bio-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.profile-bio-input {
+    border: 1px solid black;
+    padding: 8px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    font-family: inherit;
+    min-height: 60px;
+    margin-bottom: 8px;
+}
+
+.profile-bio-edit-btn, .profile-bio-save-btn {
+    border: 1px solid black;
+    background: white;
+    color: black;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    font-size: 10px;
+    cursor: pointer;
+    margin-top: 0;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.profile-stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.profile-logout-btn {
+    border: 1px solid black;
+    background: white;
+    color: black;
+    margin-top: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    display: block;
+}
+
+.profile-drawings-header {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    text-align: center;
+}

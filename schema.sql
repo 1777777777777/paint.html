@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS users (
     username TEXT PRIMARY KEY,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    bio TEXT
 );
 
 CREATE TABLE IF NOT EXISTS drawings (

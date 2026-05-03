@@ -1,5 +1,80 @@
-<meta http-equiv="refresh" content="2; url=/login">
+{% extends "main.html" %}
 
-UNDER CONSTRUCTION!!!<br>
-YOU HAVE BEEN LOGGED OUT FOR TRESPASSING!
+{% block head %}
+<link rel="stylesheet" href="/static/gallery.css">
+<link rel="stylesheet" href="/static/liked_by.css">
+<link rel="stylesheet" href="/static/profile.css">
+{% endblock %}
 
+{% block content %}
+<div class="gallery-layout">
+    <div class="profile-header-box">
+        <div class="profile-username">{{ profile_user }}</div>
+        
+        {% if bio %}
+            {% if not edit_bio %}
+                <div class="profile-bio">{{ bio | show_lines }}</div>
+            {% endif %}
+        {% else %}
+            {% if not edit_bio %}
+                <div class="profile-bio">no bio yet.</div>
+            {% endif %}
+        {% endif %}
+        
+        {% if profile_user == session["username"] %}
+            {% if edit_bio %}
+                <form action="/profile/{{ profile_user }}/bio" method="POST" class="profile-bio-form">
+                    <textarea name="bio" class="profile-bio-input" maxlength="255">{% if bio %}{{ bio }}{% endif %}</textarea>
+                    <button type="submit" class="profile-bio-save-btn">save bio</button>
+                    <a href="/profile/{{ profile_user }}" class="profile-bio-edit-btn" style="margin-top: 0;">cancel</a>
+                </form>
+            {% else %}
+                <a href="/profile/{{ profile_user }}?edit_bio=1" class="profile-bio-edit-btn">edit bio</a>
+            {% endif %}
+        {% endif %}
+
+        <div class="profile-stat-row">
+            <span>drawings:</span>
+            <span>{{ stats.drawings_count }}</span>
+        </div>
+        <div class="profile-stat-row">
+            <span>likes given:</span>
+            <span>{{ stats.likes_given }}</span>
+        </div>
+        <div class="profile-stat-row">
+            <span>likes received:</span>
+            <span>{{ stats.likes_received }}</span>
+        </div>
+        {% if profile_user == session["username"] %}
+        <a href="/logout" class="profile-logout-btn">log out &rarr;</a>
+        {% endif %}
+    </div>
+
+    <div class="profile-drawings-header">drawings by {{ profile_user }}</div>
+    
+    {% if drawings %}
+        <div class="gallery-grid" style="padding: 0;">
+            {% include "art_cards.html" %}
+        </div>
+    {% else %}
+        <div class="profile-drawings-header">no drawings yet.</div>
+    {% endif %}
+
+    <p class="page-navigation" style="text-align: center; width: 100%;">
+        {% if page > 1 %}
+            <a href="/profile/{{ profile_user }}/{{ page - 1 }}">&lt;&lt;</a>
+        {% else %}
+            <span style="visibility: hidden;">&lt;&lt;</span>
+        {% endif %}
+        
+        {{ page }}/{{ page_count }}
+        
+        {% if page < page_count %}
+            <a href="/profile/{{ profile_user }}/{{ page + 1 }}">&gt;&gt;</a>
+        {% else %}
+            <span style="visibility: hidden;">&gt;&gt;</span>
+        {% endif %}
+    </p>
+
+</div>
+{% endblock %}
