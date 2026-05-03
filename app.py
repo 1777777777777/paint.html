@@ -89,20 +89,27 @@ def draw():
 
         raw_payload = request.form.get("payload", "")
         title = request.form.get("title") or "untitled"
+        tags = request.form.getlist("tags")
 
         if len(title) > 12:
             abort(403)
 
         username = session["username"]
+        
+        db_tags = db.query("SELECT name FROM tags")
+        all_tags = [t['name'] for t in db_tags]
+        valid_tags = [tag for tag in tags if tag in all_tags]
 
         if raw_payload:
             final_payload = ffloodfill(raw_payload, GRID_SIZE, GRID_SIZE)
-            drawings.draw_save(username, title, final_payload)
+            drawings.draw_save(username, title, final_payload, tags=valid_tags)
 
         return redirect("/gallery")
         
     barcode_vis_id = secrets.token_hex(4)
-    return render_template("draw.html", grid_size=GRID_SIZE, total_pixels=TOTAL_PIXELS, iterations=ITERATIONS, barcode_vis_id=barcode_vis_id)
+    db_tags = db.query("SELECT name FROM tags")
+    all_tags = [t['name'] for t in db_tags]
+    return render_template("draw.html", grid_size=GRID_SIZE, total_pixels=TOTAL_PIXELS, iterations=ITERATIONS, barcode_vis_id=barcode_vis_id, all_tags=all_tags)
 
 
 @app.route("/gallery")
@@ -112,22 +119,35 @@ def gallery(page=1):
         return redirect("/login")
 
     search_query = request.args.get("q", "")
+    tag_query = request.args.getlist("tag")
     page_size = 12
     
-    total_count = drawings.drawings_count(search_query)
+    total_count = drawings.drawings_count(search_query, tag_query)
     page_count = math.ceil(total_count / page_size)
     page_count = max(page_count, 1)
 
-    query_string = f"?q={search_query}" if search_query else ""
+    if search_query != "":
+        query_string = "?q=" + search_query
+    else:
+        query_string = ""
+        
+    for t in tag_query:
+        if query_string != "":
+            query_string = query_string + "&tag=" + t
+        else:
+            query_string = "?tag=" + t
 
     if page < 1:
         return redirect(f"/gallery/1{query_string}")
     if page > page_count:
         return redirect(f"/gallery/{page_count}{query_string}")
     
-    drawings_list = drawings.drawings_search(search_query, page, page_size)
+    drawings_list = drawings.drawings_search(search_query, page, page_size, tag_query)
+    
+    db_tags = db.query("SELECT name FROM tags")
+    all_tags = [t['name'] for t in db_tags]
         
-    return render_template("gallery.html", drawings=drawings_list, search_query=search_query, page=page, page_count=page_count)
+    return render_template("gallery.html", drawings=drawings_list, search_query=search_query, tag_query=tag_query, page=page, page_count=page_count, all_tags=all_tags)
 
 
 @app.route("/edit_title/<int:drawing_id>", methods=["POST"])

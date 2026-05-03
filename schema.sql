@@ -16,3 +16,13 @@ CREATE TABLE IF NOT EXISTS likes (
     drawing_id INTEGER NOT NULL REFERENCES drawings,
     UNIQUE(username, drawing_id)
 );
+
+CREATE TABLE IF NOT EXISTS tags (
+    name TEXT PRIMARY KEY
+);
+
+CREATE TABLE IF NOT EXISTS drawing_tags (
+    drawing_id INTEGER NOT NULL REFERENCES drawings,
+    tag TEXT NOT NULL REFERENCES tags(name),
+    PRIMARY KEY (drawing_id, tag)
+);

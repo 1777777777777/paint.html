@@ -81,4 +81,66 @@ body {
     overflow: hidden;
 }
 
+.tag-container {
+    position: relative;
+    font-size: 12px;
+    font-family: monospace;
+}
+
+.tag-container summary {
+    background: white;
+    border: 1px solid black;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    user-select: none;
+    list-style: none;
+    position: relative;
+    z-index: 11;
+    cursor: pointer;
+}
+
+details[open].tag-container summary {
+    border-bottom: 0px;
+    padding-bottom: 5px;
+}
+
+.tag-menu {
+    background: white;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: calc(100% - 1px);
+    right: 0px;
+    padding: 8px;
+    gap: 4px;
+    z-index: 10;
+    min-width: 100px;
+}
+
+.tag-item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tag-item input[type="checkbox"] {
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+    border-radius: 0px;
+    margin: 0px;
+    cursor: pointer;
+    background: white;
+}
+
+.tag-item input[type="checkbox"]:checked {
+    background-color: black;
+}
+
+
 

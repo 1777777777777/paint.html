@@ -19,11 +19,32 @@
     border-right: none;
     border-radius: 0;
     outline: none;
+    min-width: 0;
 }
 .search-input::placeholder {
     color: lightgrey;
     opacity: 1;
 }
+
+
+.gallery-tag-btn summary {
+    border-right: 0px;
+    padding-top: 8px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+details[open].gallery-tag-btn summary {
+    border-bottom: 0px;
+    padding-bottom: 11px;
+}
+
+.gallery-tag-btn .tag-menu {
+    right: -1px;
+}
+
+
 .btn-search {
     padding: 8px 12px;
     font-family: monospace;
@@ -32,7 +53,7 @@
     border: 1px solid black;
     cursor: pointer;
 }
-.search-input:not(:placeholder-shown) + .btn-search {
+.search-form:has(.search-input:not(:placeholder-shown)) .btn-search {
     color: white;
     background: black;
     border-color: black;

@@ -13,6 +13,22 @@
     
     <form class="search-form" method="GET" action="/gallery">
         <input type="text" name="q" class="search-input" placeholder="search..." value="{{ search_query }}">
+        
+        <details class="tag-container gallery-tag-btn">
+            <summary>+tag</summary>
+            <div class="tag-menu">
+                {% for tag in all_tags %}
+                <label class="tag-item">
+                    {% if tag in tag_query %}
+                    <input type="checkbox" name="tag" value="{{ tag }}" checked> {{ tag }}
+                    {% else %}
+                    <input type="checkbox" name="tag" value="{{ tag }}"> {{ tag }}
+                    {% endif %}
+                </label>
+                {% endfor %}
+            </div>
+        </details>
+
         <button type="submit" class="btn-search">&rarr;</button>
     </form>
 
