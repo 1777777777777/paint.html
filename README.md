@@ -5,18 +5,40 @@ paint.html on toteutettu täysin ilman JavaScriptiä.
 * Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään.
 * Käyttäjä pystyy luomaan piirroksia kynää ja maalipurkkia käyttäen.
 * Käyttäjä pystyy myös nimeämään uudelleen tai poistamaan piirroksiaan.
+* Käyttäjä pystyy valitsemaan piirrokselle tageja.
 * Käyttäjä näkee sovellukseen lisätyt piirrokset.
-* Käyttäjä pystyy etsimään piirroksia hakusanalla.
-* Sovelluksessa ei vielä ole käyttäjäsivuja eikä piirrosten luokittelua...
-* Käyttäjä pystyy tykkäämään piirroksista. Klikkaamalla näkee kaikki tykkääjät. (CSS vielä kesken, joten näyttää paremmalta kun tykkää muiden kuin omien piirroksista)
+* Käyttäjä pystyy etsimään piirroksia hakusanalla tai tageilla.
+* Sovelluksessa on käyttäjäsivut ja tilastot.
+* Käyttäjä pystyy lisäämään itselleen profiilikuvauksen. Teksti on rivitetty oikein! 
+* Käyttäjä pystyy tykkäämään piirroksista. Klikkaamalla tekstiä näkee kaikki tykkääjät.
 
-Asenna ensin Flask: `pip install flask`
+---
 
-Luo database.db: `sqlite3 database.db < schema.sql`
+Käynnistysohjeet:
 
-Käynnistä sitten sovellus: `python app.py`
+Asenna ensin Flask:
+```
+python3 -m venv venv
+source venv/bin/activate
+pip install flask
+```
+
+Luo sitten database.db: 
+```
+sqlite3 database.db < schema.sql
+sqlite3 database.db < init.sql
+```
+
+Käynnistä sitten sovellus:
+```
+python app.py
+```
 
 Jos maalipurkki ei toimi, vähennä iteraatioiden määrää esim. `python app.py --iterations 10`
+
+---
+
+`seed.py`-skriptin avulla sovellusta voi testata suurella tietomäärällä (1 000 käyttäjää ja 100 000 piirustusta). Galleria ja profiilisivut toimivat nopeasti sadan tuhannen piirustuksenkin kanssa. Sivutus estää koko tietokannan lataamisen kerralla. Lisäksi hakuja on nopeutettu lisäämällä drawings- ja likes-tauluihin indeksit.
 
 ---
 
@@ -29,8 +51,6 @@ Myös galleria ja piirrosten suurentaminen toimivat ilman JavaScriptiä. Pop-up 
 Vaikka sainkin SVG-filtterit lopulta tukemaan eri värejä[^2], pitäydyn ehkä kuitenkin mustavalkoisessa värimaailmassa esteettisistä syistä. Samalla vähenee myös bugien määrä, joihin käyttäjä muuten väistämättä törmäisi. Ongelmat johtuvat pitkälti siitä, miten SVG-filtterit toimivat.
 
 Sivu on testattu Edgellä ja Firefox Developer Editionilla. Koska flood fill on simuloitu SVG-filttereiden avulla ilman rekursiota, iterointi on koodattu suoraan HTML-tiedostoon. DOM-elementtien määrä voi siis olla hyvinkin suuri, ja sivun toimivuus on kiinni käyttäjän koneen tehoista. Esimerkiksi omalla koneella U-kirjaimen muotoisen alueen täyttäminen vaatii vähintään 55 iteraatiota.
-
-~Vanha demo-sivu löytyy [täältä](https://1777777777777.github.io/paint.html/).~
 
 Alla oleva GIF havainnollistaa filttereiden toimintaa.[^3]
 
