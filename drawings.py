@@ -3,58 +3,72 @@ import db
 
 def draw_save(username, title, payload, tags=None):
     db.execute(
-               "INSERT INTO drawings (username, title, payload) VALUES (?, ?, ?)",
-               (username, title, payload))
-    
+        """
+        INSERT INTO drawings (username, title, payload)
+        VALUES (?, ?, ?)
+        """,
+        (username, title, payload)
+    )
+
     if tags:
         drawing_id = db.last_insert_id()
         for tag in tags:
-            db.execute("INSERT INTO drawing_tags (drawing_id, tag) VALUES (?, ?)", (drawing_id, tag))
+            db.execute(
+                """
+                INSERT INTO drawing_tags (drawing_id, tag)
+                VALUES (?, ?)
+                """,
+                (drawing_id, tag)
+            )
 
 
 def drawings_search(search_query="", page=1, page_size=10, tag_query=None):
     if tag_query is None:
         tag_query = []
-        
+
     offset = (page - 1) * page_size
-    
-    query = ["SELECT id, username, title, payload FROM drawings"]
+
+    query = [
+        """
+        SELECT id, username, title, payload
+        FROM drawings
+        """
+    ]
     wheres = []
     variables = []
-    
 
     if search_query:
         wheres.append("(title LIKE ? OR username LIKE ?)")
         variables.append(f"%{search_query}%")
         variables.append(f"%{search_query}%")
-        
+
     for tag in tag_query:
         wheres.append("id IN (SELECT drawing_id FROM drawing_tags WHERE tag = ?)")
         variables.append(tag)
-        
+
     if wheres:
         query.append("WHERE " + " AND ".join(wheres))
-        
+
     query.append("ORDER BY id DESC LIMIT ? OFFSET ?")
     variables.append(page_size)
     variables.append(offset)
-    
+
     drawings = db.query(" ".join(query), tuple(variables))
-        
+
     result = []
-    
+
     for row in drawings:
         d = dict(row)
 
         likes = db.query(
             """
-            SELECT username 
+            SELECT username
             FROM likes
             WHERE drawing_id = ?
             ORDER BY id ASC
             """,
             (d["id"],))
-        
+
         d["like_users"] = [l["username"] for l in likes]
 
         tags = db.query(
@@ -67,20 +81,20 @@ def drawings_search(search_query="", page=1, page_size=10, tag_query=None):
         d["tags"] = [t["tag"] for t in tags]
 
         result.append(d)
-        
+
     return result
 
 
 def drawing_edit_info(drawing_id, username, new_title, new_tags):
     if not db.query(
         """
-        SELECT id 
+        SELECT id
         FROM drawings
         WHERE id = ?
         AND username = ?
         """,
         (drawing_id, username)):
-        
+
         return
 
     db.execute(
@@ -90,17 +104,23 @@ def drawing_edit_info(drawing_id, username, new_title, new_tags):
         WHERE id = ?
         """,
         (new_title, drawing_id))
-    
+
     db.execute(
         """
         DELETE FROM drawing_tags
         WHERE drawing_id = ?
         """,
         (drawing_id,))
-        
+
     if new_tags:
         for tag in new_tags:
-            db.execute("INSERT INTO drawing_tags (drawing_id, tag) VALUES (?, ?)", (drawing_id, tag))
+            db.execute(
+                """
+                INSERT INTO drawing_tags (drawing_id, tag)
+                VALUES (?, ?)
+                """,
+                (drawing_id, tag)
+            )
 
 
 def drawing_delete(drawing_id, username):
@@ -108,20 +128,20 @@ def drawing_delete(drawing_id, username):
         """
         DELETE FROM drawing_tags
         WHERE drawing_id IN (
-            SELECT id FROM drawings WHERE id = ? AND username = ?
+        SELECT id FROM drawings WHERE id = ? AND username = ?
         )
         """,
         (drawing_id, username))
-        
+
     db.execute(
         """
         DELETE FROM likes
         WHERE drawing_id IN (
-            SELECT id FROM drawings WHERE id = ? AND username = ?
+        SELECT id FROM drawings WHERE id = ? AND username = ?
         )
         """,
         (drawing_id, username))
-        
+
     db.execute(
         """
         DELETE FROM drawings
@@ -136,11 +156,11 @@ def drawing_like(drawing_id, username):
         """
         SELECT id
         FROM likes
-        WHERE drawing_id = ? 
+        WHERE drawing_id = ?
         AND username = ?
         """,
         (drawing_id, username))
-    
+
     if existing:
         db.execute(
             """
@@ -151,30 +171,92 @@ def drawing_like(drawing_id, username):
             (drawing_id, username))
     else:
         db.execute(
-            "INSERT INTO likes (drawing_id, username) VALUES (?, ?)",
-            (drawing_id, username))
+            """
+            INSERT INTO likes (drawing_id, username)
+            VALUES (?, ?)
+            """,
+            (drawing_id, username)
+        )
 
 
 def drawings_count(search_query="", tag_query=None):
     if tag_query is None:
         tag_query = []
-        
+
     query = ["SELECT COUNT(id) AS count FROM drawings"]
     wheres = []
     variables = []
-    
+
     if search_query:
         wheres.append("(title LIKE ? OR username LIKE ?)")
         variables.append(f"%{search_query}%")
         variables.append(f"%{search_query}%")
-        
+
     for tag in tag_query:
         wheres.append("id IN (SELECT drawing_id FROM drawing_tags WHERE tag = ?)")
         variables.append(tag)
-        
+
     if wheres:
         query.append("WHERE " + " AND ".join(wheres))
-        
+
     result = db.query(" ".join(query), tuple(variables))
-    
+
     return result[0]["count"]
+
+
+def get_user_drawings_count(username):
+    result = db.query(
+        """
+        SELECT COUNT(id) AS count
+        FROM drawings
+        WHERE username = ?
+        """,
+        [username]
+    )
+    return result[0]["count"]
+
+
+def get_user_drawings(username, page, page_size):
+    offset = (page - 1) * page_size
+    user_drawings_raw = db.query(
+        """
+        SELECT id, username, title, payload
+        FROM drawings
+        WHERE username = ?
+        ORDER BY id DESC
+        LIMIT ? OFFSET ?
+        """,
+        [username, page_size, offset]
+    )
+
+    user_drawings = []
+    for row in user_drawings_raw:
+        d = dict(row)
+        likes = db.query(
+            """
+            SELECT username
+            FROM likes
+            WHERE drawing_id = ?
+            ORDER BY id ASC
+            """,
+            (d["id"],)
+        )
+        d["like_users"] = [l["username"] for l in likes]
+
+        tags = db.query(
+            """
+            SELECT tag
+            FROM drawing_tags
+            WHERE drawing_id = ?
+            """,
+            (d["id"],)
+        )
+        d["tags"] = [t["tag"] for t in tags]
+        user_drawings.append(d)
+
+    return user_drawings
+
+
+def get_all_tags():
+    db_tags = db.query("SELECT name FROM tags")
+    return [t["name"] for t in db_tags]

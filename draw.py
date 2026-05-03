@@ -1,5 +1,4 @@
 import sys
-import db
 
 GRID_SIZE = 10
 TOTAL_PIXELS = GRID_SIZE * GRID_SIZE
@@ -12,10 +11,10 @@ if "--iterations" in sys.argv:
     except (ValueError, IndexError):
         pass
 
-def ffloodfill (raw_payload, width, height):
+def flood_fill(raw_payload, width, height):
     grid = [i for i in raw_payload if i in ["0", "1", "b"]]
     queue = [i for i, j in enumerate(grid) if j == 'b']
-    
+
     while queue:
         near = []
         curr = queue.pop(0)
@@ -36,6 +35,5 @@ def ffloodfill (raw_payload, width, height):
                 grid[n] = "b"
 
                 queue.append(n)
-                
 
     return "".join(grid).replace("b", "1")
