@@ -46,8 +46,8 @@ def gallery_redirect(drawing_id=None):
 def register():
     if request.method == "POST":
         username = request.form["username"]
-        password = request.form["password"]
-        password_confirm = request.form["password_confirm"]
+        password = request.form.get("password", "")
+        password_confirm = request.form.get("password_confirm", "")
 
         if not username:
             flash("Username cannot be empty or only spaces.")
@@ -60,6 +60,11 @@ def register():
 
         if len(username) > 12:
             abort(403)
+
+        if not password:
+            flash("Password cannot be empty.")
+            filled = {"username": username}
+            return render_template("register.html", filled=filled)
 
         if password != password_confirm:
             flash("Passwords do not match.")
