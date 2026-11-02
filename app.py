@@ -2,7 +2,7 @@ import math
 import re
 import secrets
 
-from flask import Flask, render_template, request, redirect, session, flash, abort
+from flask import Flask, render_template, request, redirect, session, flash, abort, url_for
 import markupsafe
 
 import config
@@ -161,21 +161,10 @@ def gallery(page=1):
     page_count = math.ceil(total_count / page_size)
     page_count = max(page_count, 1)
 
-    if search_query != "":
-        query_string = "?q=" + search_query
-    else:
-        query_string = ""
-
-    for t in tag_query:
-        if query_string != "":
-            query_string = query_string + "&tag=" + t
-        else:
-            query_string = "?tag=" + t
-
     if page < 1:
-        return redirect(f"/gallery/1{query_string}")
+        return redirect(url_for("gallery", page=1, q=search_query, tag=tag_query))
     if page > page_count:
-        return redirect(f"/gallery/{page_count}{query_string}")
+        return redirect(url_for("gallery", page=page_count, q=search_query, tag=tag_query))
 
     drawings_list = drawings.drawings_search(search_query, page, page_size, tag_query)
 

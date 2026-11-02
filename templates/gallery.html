@@ -38,7 +38,7 @@
 
     <p class="page-navigation">
         {% if page > 1 %}
-            <a href="/gallery/{{ page - 1 }}?q={{ search_query }}">&lt;&lt;</a>
+            <a href="{{ url_for('gallery', page=page - 1, q=search_query, tag=tag_query) }}">&lt;&lt;</a>
         {% else %}
             <span style="visibility: hidden;">&lt;&lt;</span>
         {% endif %}
@@ -46,7 +46,7 @@
         {{ page }}/{{ page_count }}
         
         {% if page < page_count %}
-            <a href="/gallery/{{ page + 1 }}?q={{ search_query }}">&gt;&gt;</a>
+            <a href="{{ url_for('gallery', page=page + 1, q=search_query, tag=tag_query) }}">&gt;&gt;</a>
         {% else %}
             <span style="visibility: hidden;">&gt;&gt;</span>
         {% endif %}
