@@ -30,6 +30,11 @@ sqlite3 database.db < schema.sql
 sqlite3 database.db < init.sql
 ```
 
+Luo ja aseta SECRET_KEY:
+```bat
+for /f %k in ('python -c "import secrets; print(secrets.token_hex(32))"') do set "SECRET_KEY=%k"
+```
+
 Käynnistä sitten sovellus:
 ```
 python app.py
