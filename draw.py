@@ -12,7 +12,9 @@ if "--iterations" in sys.argv:
         pass
 
 def flood_fill(raw_payload, width, height):
-    grid = [i for i in raw_payload if i in ["0", "1", "b"]]
+    grid = [char for char in raw_payload if not char.isspace()]
+    if len(grid) != width * height or any(char not in "01b" for char in grid):
+        raise ValueError("Drawing must contain exactly the expected number of pixels (0, 1 or b).")
     queue = [i for i, j in enumerate(grid) if j == 'b']
 
     while queue:

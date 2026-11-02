@@ -127,9 +127,11 @@ def draw():
         all_tags = drawings.get_all_tags()
         valid_tags = [tag for tag in tags if tag in all_tags]
 
-        if raw_payload:
+        try:
             final_payload = flood_fill(raw_payload, GRID_SIZE, GRID_SIZE)
-            drawings.draw_save(username, title, final_payload, tags=valid_tags)
+        except ValueError:
+            abort(400, description="Invalid drawing. Submit a complete board containing only pixel values 0, 1 or b.")
+        drawings.draw_save(username, title, final_payload, tags=valid_tags)
 
         return redirect("/gallery")
 
